@@ -1,0 +1,23 @@
+Exporter version: 5.6.4, Blender version: 2.79 (sub 0)
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		export scope        :  ALL
+		inline textures     :  false
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		texture directory   :  C:\Users\Mark.quinn\Documents\github\Misc\
+	Python World class constructor completed
+	processing begun of mesh:  Cone001
+========= An error was encountered =========
+  File "C:\Users\Mark.quinn\AppData\Roaming\Blender Foundation\Blender\2.79\scripts\addons\babylon-js\json_exporter.py", line 107, in execute
+    mesh = Mesh(object, scene, self)
+  File "C:\Users\Mark.quinn\AppData\Roaming\Blender Foundation\Blender\2.79\scripts\addons\babylon-js\mesh.py", line 158, in __init__
+    recipe = BakingRecipe(object)
+  File "C:\Users\Mark.quinn\AppData\Roaming\Blender Foundation\Blender\2.79\scripts\addons\babylon-js\material.py", line 197, in __init__
+    self.isBillboard = len(mesh.material_slots) == 1 and mesh.material_slots[0] is not None and mesh.material_slots[0].material.game_settings.face_orientation == 'BILLBOARD'
+ERROR:  'NoneType' object has no attribute 'game_settings'
+========= end of processing =========
+elapsed time:  0 min, 0.0185 secs
