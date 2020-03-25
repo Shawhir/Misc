@@ -1,0 +1,201 @@
+{
+  "producer": {
+    "name": "3dsmax",
+    "version": "2018",
+    "exporter_version": "1.4.2",
+    "file": "heart.babylon"
+  },
+  "autoClear": true,
+  "clearColor": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "ambientColor": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "fogMode": 0,
+  "fogColor": null,
+  "fogStart": 0.0,
+  "fogEnd": 0.0,
+  "fogDensity": 0.0,
+  "gravity": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "physicsEngine": null,
+  "physicsEnabled": false,
+  "physicsGravity": null,
+  "lights": [
+    {
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "type": 3,
+      "diffuse": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "specular": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "intensity": 1.0,
+      "range": 3.40282347E+38,
+      "exponent": 0.0,
+      "angle": 0.0,
+      "groundColor": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "excludedMeshesIds": null,
+      "includedOnlyMeshesIds": null,
+      "metadata": null,
+      "lightmapMode": null,
+      "falloffType": null,
+      "name": "Default light",
+      "id": "8503cbe5-85af-4349-b05d-0fa8a48d932d",
+      "parentId": null,
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "animations": null,
+      "autoAnimate": false,
+      "autoAnimateFrom": 0,
+      "autoAnimateTo": 0,
+      "autoAnimateLoop": false
+    }
+  ],
+  "meshes": [
+    {
+      "materialId": "f2535c91-e105-44bf-8e95-15469207a829",
+      "isEnabled": true,
+      "isVisible": true,
+      "positions": null,
+      "normals": null,
+      "tangents": null,
+      "uvs": null,
+      "uvs2": null,
+      "colors": null,
+      "hasVertexAlpha": false,
+      "matricesIndices": null,
+      "matricesWeights": null,
+      "matricesIndicesExtra": null,
+      "matricesWeightsExtra": null,
+      "indices": null,
+      "receiveShadows": true,
+      "infiniteDistance": false,
+      "billboardMode": 0,
+      "visibility": 1.0,
+      "subMeshes": null,
+      "instances": null,
+      "skeletonId": -1,
+      "numBoneInfluencers": 4,
+      "applyFog": true,
+      "metadata": null,
+      "lodMeshIds": null,
+      "lodDistances": null,
+      "lodCoverages": null,
+      "rotation": null,
+      "scaling": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "rotationQuaternion": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actions": null,
+      "checkCollisions": false,
+      "pickable": false,
+      "showBoundingBox": false,
+      "showSubMeshesBoundingBox": false,
+      "alphaIndex": 1000,
+      "physicsImpostor": 0,
+      "physicsMass": 0.0,
+      "physicsFriction": 0.0,
+      "physicsRestitution": 0.0,
+      "name": "high",
+      "id": "c0d80d07-d4cc-4d07-9fb5-eefc216b7634",
+      "parentId": null,
+      "position": [
+        0.0004,
+        0.0,
+        0.0
+      ],
+      "animations": [],
+      "autoAnimate": true,
+      "autoAnimateFrom": 0,
+      "autoAnimateTo": 100,
+      "autoAnimateLoop": true,
+      "boundingBoxMinimum": [
+        -4203.14648,
+        -5900.57666,
+        -2400.21265
+      ],
+      "boundingBoxMaximum": [
+        3763.66577,
+        5465.256,
+        4513.846
+      ],
+      "delayLoadingFile": "heart.high.c0d80d07-d4cc-4d07-9fb5-eefc216b7634.babylonbinarymeshdata",
+      "hasUVs": true,
+      "_binaryInfo": {
+        "positionsAttrDesc": {
+          "count": 414315,
+          "stride": 3,
+          "offset": 0,
+          "dataType": 1
+        },
+        "normalsAttrDesc": {
+          "count": 414315,
+          "stride": 3,
+          "offset": 1657260,
+          "dataType": 1
+        },
+        "uvsAttrDesc": {
+          "count": 276210,
+          "stride": 2,
+          "offset": 3314520,
+          "dataType": 1
+        },
+        "indicesAttrDesc": {
+          "count": 138105,
+          "stride": 1,
+          "offset": 4419360,
+          "dataType": 0
+        },
+        "subMeshesAttrDesc": {
+          "count": 1,
+          "stride": 5,
+          "offset": 4971780,
+          "dataType": 0
+        }
+      }
+    }
+  ],
+  "sounds": [],
+  "materials": [],
+  "multiMaterials": [],
+  "particleSystems": null,
+  "lensFlareSystems": null,
+  "shadowGenerators": [],
+  "skeletons": [],
+  "actions": null,
+  "metadata": null,
+  "workerCollisions": false,
+  "useDelayedTextureLoading": true
+}
