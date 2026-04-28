@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Import glTF 3D Models | Sample | ArcGIS Maps SDK for JavaScript</title>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+
+      calcite-panel {
+        max-width: 220px;
+        margin: 0 auto;
+      }
+
+      calcite-block {
+        margin-block: 0;
+        --calcite-font-size--2: 0.95rem;
+      }
+
+      #credits {
+        font-size: 0.75em;
+        line-height: 1.1em;
+      }
+
+      .control-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <arcgis-scene item-id="414a28cfca7a471180e8e952cf14c60f">
+      <arcgis-zoom slot="top-left"></arcgis-zoom>
+      <arcgis-navigation-toggle slot="top-left"></arcgis-navigation-toggle>
+      <arcgis-compass slot="top-left"></arcgis-compass>
+      <calcite-panel slot="top-right">
+        <calcite-block
+          label="UI for adding symbols into the scene"
+          description="Select a symbol and place it in the scene:"
+          expanded>
+          <calcite-label
+            ><calcite-button id="tent" width="full">Tent</calcite-button>
+          </calcite-label>
+          <calcite-label>
+            <calcite-button id="canoe" width="full">Canoe</calcite-button>
+          </calcite-label>
+
+          <div style="margin-top: 12px; font-weight: 600; font-size: 0.85rem;">Elevation offset</div>
+          <div class="control-row">
+            <calcite-button id="elev-down" icon-start="chevron-down" scale="s" appearance="outline"></calcite-button>
+            <calcite-slider id="elev-slider" min="-50" max="200" value="0" step="1" scale="s" style="flex:1;"></calcite-slider>
+            <calcite-button id="elev-up" icon-start="chevron-up" scale="s" appearance="outline"></calcite-button>
+          </div>
+          <div id="elevation-value" style="text-align:center; font-size:0.8rem;">0 m</div>
+
+          <div style="margin-top: 12px; font-weight: 600; font-size: 0.85rem;">Model height</div>
+          <div class="control-row">
+            <calcite-slider id="height-slider" min="1" max="100" value="10" step="1" scale="s" style="flex:1;"></calcite-slider>
+          </div>
+          <div id="height-value" style="text-align:center; font-size:0.8rem;">10 m</div>
+
+          <p id="credits">
+            Tent and canoe glTF models from
+            <a href="https://www.kenney.nl/assets/" target="_blank">Kenney game assets</a> under
+            <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank"
+              >CC0 1.0 Universal</a
+            >.
+          </p>
+        </calcite-block>
+      </calcite-panel>
+    </arcgis-scene>
+    <script type="module">
+      const [GraphicsLayer, SketchViewModel] = await $arcgis.import([
+        "@arcgis/core/layers/GraphicsLayer.js",
+        "@arcgis/core/widgets/Sketch/SketchViewModel.js",
+      ]);
+
+      const viewElement = document.querySelector("arcgis-scene");
+
+      const graphicsLayer = new GraphicsLayer({
+        elevationInfo: { mode: "relative-to-ground" },
+      });
+
+      await viewElement.viewOnReady();
+      viewElement.map.add(graphicsLayer);
+
+      const tentButton = document.getElementById("tent");
+      const canoeButton = document.getElementById("canoe");
+      const elevSlider = document.getElementById("elev-slider");
+      const elevUp = document.getElementById("elev-up");
+      const elevDown = document.getElementById("elev-down");
+      const elevValue = document.getElementById("elevation-value");
+      const heightSlider = document.getElementById("height-slider");
+      const heightValue = document.getElementById("height-value");
+
+      let currentGraphic = null;
+      let currentElevation = 0;
+      let currentHeight = 10;
+
+      const sketchVM = new SketchViewModel({
+        layer: graphicsLayer,
+        view: viewElement.view,
+      });
+
+      function getSymbol() {
+        return {
+          type: "point-3d",
+          symbolLayers: [
+            {
+              type: "object",
+              height: currentHeight,
+              resource: {
+                href: "./test5.glb",
+              },
+            },
+          ],
+        };
+      }
+
+      function updateElevation(val) {
+        currentElevation = val;
+        elevSlider.value = val;
+        elevValue.textContent = val + " m";
+        if (currentGraphic) {
+          const point = currentGraphic.geometry.clone();
+          point.z = currentElevation;
+          currentGraphic.geometry = point;
+        }
+      }
+
+      function updateHeight(val) {
+        currentHeight = val;
+        heightSlider.value = val;
+        heightValue.textContent = val + " m";
+        if (currentGraphic) {
+          currentGraphic.symbol = getSymbol();
+        }
+      }
+
+      function setupButtonClick(button, modelName) {
+        button.addEventListener("click", () => {
+          sketchVM.pointSymbol = getSymbol();
+          sketchVM.create("point");
+          makeButtonsSolid();
+          button.setAttribute("appearance", "outline");
+        });
+      }
+
+      setupButtonClick(tentButton, "tent");
+      setupButtonClick(canoeButton, "canoe");
+
+      sketchVM.on("create", (event) => {
+        switch (event.state) {
+          case "complete": {
+            currentGraphic = event.graphic;
+            const point = currentGraphic.geometry.clone();
+            point.z = currentElevation;
+            currentGraphic.geometry = point;
+            sketchVM.update(event.graphic);
+            makeButtonsSolid();
+            break;
+          }
+          case "cancel": {
+            makeButtonsSolid();
+            break;
+          }
+        }
+      });
+
+      sketchVM.on("update", (event) => {
+        if (event.graphics && event.graphics.length > 0) {
+          currentGraphic = event.graphics[0];
+        }
+      });
+
+      elevSlider.addEventListener("calciteSliderInput", (e) => {
+        updateElevation(Number(e.target.value));
+      });
+
+      elevUp.addEventListener("click", () => {
+        updateElevation(Math.min(200, currentElevation + 5));
+      });
+
+      elevDown.addEventListener("click", () => {
+        updateElevation(Math.max(-50, currentElevation - 5));
+      });
+
+      heightSlider.addEventListener("calciteSliderInput", (e) => {
+        updateHeight(Number(e.target.value));
+      });
+
+      function makeButtonsSolid() {
+        const elements = document.querySelectorAll("calcite-button");
+        for (const element of elements) {
+          element.setAttribute("appearance", "solid");
+        }
+      }
+    </script>
+  </body>
+</html>
